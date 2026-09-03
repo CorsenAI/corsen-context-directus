@@ -9,6 +9,22 @@ same-origin WebMCP.
 [Live demo](https://directus-webmcp.corsen.ai) ·
 [Download ZIP](https://github.com/CorsenAI/corsen-context-directus/archive/refs/heads/main.zip)
 
+## Set up on your own site
+
+1. Clone this repository and `npm ci`; copy `.env.example` to `.env`.
+2. Set `SITE_URL` to your public origin plus `DIRECTUS_URL` and, when required, a read-only `DIRECTUS_TOKEN`.
+3. Check the public URL mapping in `server.js` against your Directus frontend
+   so every URL the tools return opens on your site.
+4. `npm test`, then run the bridge as your frontend or as a sidecar: proxy
+   `/v1/mcp`, `/webmcp.js` and `/llms.txt` from your site's origin and load
+   `/webmcp.js` from your Directus theme.
+5. Verify with `npx @corsenai/corsen-context-cli@2.0.1 doctor --url https://your-site.example`
+   and a WebMCP-capable browser.
+6. Revoke at any time with `CORSEN_CONTEXT_MCP_ENABLED=false` and a restart.
+
+The complete walkthrough, with Nginx routes, credential boundaries, cache
+behaviour, verification steps and rollback, is in [DEPLOYMENT.md](DEPLOYMENT.md).
+
 ## Prerequisites
 
 - Node.js 22.12+
